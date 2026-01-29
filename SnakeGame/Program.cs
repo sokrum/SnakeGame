@@ -27,6 +27,7 @@ class Program
     static int score = 0;
 
     static bool gameOver = false;
+    static bool paused = false;
     static Random random = new Random();
 
     static void Main()
@@ -45,7 +46,10 @@ class Program
         while (!gameOver)
         {
             Input();
-            Logic();
+            if (!paused)
+            {
+                Logic();
+            }
             Draw();
             Thread.Sleep(90);
         }
@@ -83,6 +87,12 @@ class Program
         while (Console.KeyAvailable)
         {
             var key = Console.ReadKey(true).Key;
+
+            if (key == ConsoleKey.P)
+            {
+                paused = !paused;
+                continue; // czyści kolejkę klawiszy
+            }
 
             // Snake 1: strzałki
             if (key == ConsoleKey.UpArrow && dy1 != 1) { dx1 = 0; dy1 = -1; }
@@ -209,5 +219,12 @@ class Program
         // score - ostatnia linia
         Console.SetCursorPosition(2, height);
         Console.Write("Score: " + score + "   |  P1: arrows  P2: WASD");
+
+        if (paused)
+        {
+            Console.SetCursorPosition(width / 2 - 3, height / 2);
+            Console.Write("PAUSED");
+        }
+
     }
 }
