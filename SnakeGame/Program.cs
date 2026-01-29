@@ -152,12 +152,14 @@ class Program
             score++;
             SpawnFood();
         }
-        else
-        {
-            // nie rosną -> ucinamy ogon
+
+        // każdy wąż zarządza ogonem osobno
+        if (!eat1)
             snake1.RemoveAt(snake1.Count - 1);
+
+        if (!eat2)
             snake2.RemoveAt(snake2.Count - 1);
-        }
+
     }
 
     static bool HitWall(int x, int y)
